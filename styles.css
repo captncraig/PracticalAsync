@@ -178,10 +178,17 @@ a:focus {
 .impress-enabled .step.remain.past{
 	opacity: 0.5;
 }
+.impress-enabled .step.remainStrong.past{
+	opacity: 0.9;
+}
 
 #conc.past{
 	opacity: 0.5;
 }
 
 .impress-enabled .step.active { opacity: 1 }
+
+#synch pre{
+	font-size:22px;
+}
 

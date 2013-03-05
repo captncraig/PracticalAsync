@@ -8,6 +8,7 @@
     
     <meta name="author" content="Craig Peterson" />
 	 <link href="styles.css" rel="stylesheet" />
+	 <link rel="stylesheet" href="styles/sunburst.css">
 </head>
 
 <body class="impress-not-supported">
@@ -25,23 +26,48 @@
   <h3>Utah Code Camp Spring 2013</h3>
 </div>
 
-<div id="problem" class="step" data-x="1000" data-y="1000"><h1>Problem:</h1>Words are hard.</div>
-<div class="step remain" data-x="800" data-y="1000" data-z="-1500" data-rotate="0">Threading</div>
-<div class="step remain" data-x="800" data-y="1000" data-z="-1500" data-rotate="20">Parallelism</div>
+<div id="problem" class="step" data-x="1000" data-y="1000" data-scale="3">What does async mean?</div>
+<div class="step remain word" data-x="800" data-y="1000" data-z="-1500" data-rotate="0">Threading</div>
+<div class="step remain word" data-x="800" data-y="1000" data-z="-1500" data-rotate="20">Parallelism</div>
 <div id="conc" class="step" data-x="800" data-y="1000" data-z="-1500" data-rotate="40">Concurrency</div>
-<div class="step remain" data-x="800" data-y="1000" data-z="-1500" data-rotate="60">Multitasking</div>
+<div class="step remain word" data-x="800" data-y="1000" data-z="-1500" data-rotate="60">Multitasking</div>
 
 <div id="concurrency" class="step" data-x="800" data-y="1000" data-z="-1900" data-rotate="40" ></div>
-<div id="stuff" class="step" data-x="800" data-y="1200" data-z="-1900" data-rotate="40" >Multiple things happening simultaneously</div>
+<div id="stuff" class="step" data-x="800" data-y="1200" data-z="-1900" data-rotate="40" >Multiple things happening at once</div>
 
-<div id="clone" class="step" data-x="1800" data-y="2000">git clone <a href="https://github.com/captncraig/BadJokeClient">https://github.com/captncraig/BadJokeClient.git</a></div>
-<div class="step" data-x="1800" data-y="2200">git checkout synch</div>
+<div id="synch" class="step remainStrong" data-x="1800" data-y="2100">Synchronous Code:<br/><pre><code class='cs'>var client = new WebClient();
+var text = client.DownloadString("http://someWebsite.com");
+textBox1.Text = text;
+</code></pre></div>
+<div id="whatsWrong" class="step" data-x="1800" data-y="2400">It works! What's wrong?</div>
+<div id="notResponding" class="step" data-x="1800" data-y="2000" data-z="-400" data-rotate-x="-90"><img src='lag.png'/></div>
+<div id="backToCode" class="step" data-x="1800" data-y="2200"></div>
+<div id="whatsWrong2" class="step" data-x="1800" data-y="2400">But that doesn't matter for Web-Apps!</div>
+<div id="threadPool" class="step" data-x="1800" data-y="2000" data-z="400" data-rotate-x="-90" style="font-size:1000%">Yes it does!</div>
+<div id="times" class="step" data-x="2700" data-y="2000" data-z="400" data-rotate-x="-90">Things take time:<ul>
+      <li>L1: 3 cycles</li>
+      <li>L2: 14 cycles</li>
+      <li>RAM: 250 cycles</li>
+      <li>Disk: 41,000,000 cycles</li>
+      <li>Network: 240,000,000 cycles</li>
+    </ul></div>
+	<div id="timesScaled" class="step" data-x="2700" data-y="2000" data-z="400" data-rotate-x="-90">Things take time:<ul>
+      <li>L1: 1 second</li>
+      <li>L2: 4 seconds</li>
+      <li>RAM: 83 seconds</li>
+      <li>Disk: 158 Days</li>
+      <li>Network: 2.535 years</li>
+    </ul></div>
 
 </div>
 <script src="js/impress.js"></script>
 <script src="js/jquery.js"></script>
+<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
 <script src="js/presentation.js"></script>
-<script>impress().init();</script>
+<script>
+impress().init();
+hljs.initHighlightingOnLoad();
+</script>
 
 </body>
 </html>
