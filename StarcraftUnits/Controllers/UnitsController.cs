@@ -8,7 +8,7 @@ namespace StarcraftUnits.Controllers
     public class UnitsController : ApiController
     {
         private readonly IUnitData _db;
-        private IWebServiceClient _client;
+        private readonly IWebServiceClient _client;
 
         public UnitsController(IUnitData db, IWebServiceClient client)
         {
@@ -35,6 +35,8 @@ namespace StarcraftUnits.Controllers
             var unit = _db.GetUnit(name);
             var counters = _client.GetCountersFor(name);
             unit.Counters = counters;
+            var builtFrom = _client.BuiltFrom(name);
+            unit.BuiltFrom = builtFrom;
             return unit;
         }
     }

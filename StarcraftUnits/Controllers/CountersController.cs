@@ -15,6 +15,7 @@ namespace StarcraftUnits.Controllers
                     break;
                 case "Marine":
                     list.Add("Baneling");
+                    list.Add("Colossus");
                     break;
                 case "Carrier":
                     list.Add("More Carriers");

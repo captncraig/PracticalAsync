@@ -14,5 +14,6 @@ namespace StarcraftUnits.Models
         public float AirDps { get; set; }
         public float Speed { get; set; }
         public IList<string> Counters { get; set; }
+        public string BuiltFrom { get; set; }
     }
 }
