@@ -1,4 +1,6 @@
-﻿namespace StarcraftUnits.Models
+﻿using System.Collections.Generic;
+
+namespace StarcraftUnits.Models
 {
     public class Unit
     {
@@ -11,5 +13,6 @@
         public float GroundDps { get; set; }
         public float AirDps { get; set; }
         public float Speed { get; set; }
+        public IList<string> Counters { get; set; }
     }
 }

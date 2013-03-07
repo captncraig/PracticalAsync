@@ -108,6 +108,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\CountersController.cs" />
     <Compile Include="Controllers\UnitsController.cs" />
     <Compile Include="Data\IUnitData.cs" />
     <Compile Include="Data\UnitData.cs" />
