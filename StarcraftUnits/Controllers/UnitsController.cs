@@ -16,9 +16,16 @@ namespace StarcraftUnits.Controllers
 
         public UnitsController():this(new UnitData()){}
 
+        // /units
         public IList<UnitSummary> GetAllUnits()
         {
             return _db.GetAllUnits();
+        }
+
+        // /units/Marine
+        public Unit GetUnit(string id)
+        {
+            return _db.GetUnit(id);
         }
     }
 }
