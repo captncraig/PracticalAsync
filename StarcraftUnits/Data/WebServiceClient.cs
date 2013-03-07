@@ -9,7 +9,7 @@ namespace StarcraftUnits.Data
 
         public IList<string> GetCountersFor(string name)
         {
-            var client = new JsonServiceClient(Url);
+            var client = new XmlServiceClient(Url);
             return client.Get<List<string>>("/counters/" + name);
         }
     }
