@@ -77,6 +77,7 @@ body {
 */
 b, strong { font-weight: bold }
 i, em { font-style: italic }
+u{font-style: underline}
 
 /*
     ... and give links a nice look.
@@ -166,7 +167,7 @@ a:focus {
 */
 .impress-enabled .step {
     margin: 0;
-    opacity: 0.01;
+    opacity: 0;
 
     -webkit-transition: opacity 1s;
     -moz-transition:    opacity 1s;
@@ -174,6 +175,7 @@ a:focus {
     -o-transition:      opacity 1s;
     transition:         opacity 1s;
 }
+
 
 .impress-enabled .step.remain.past{
 	opacity: 0.5;
@@ -188,7 +190,7 @@ a:focus {
 
 .impress-enabled .step.active { opacity: 1 }
 
-#synch pre{
+pre{
 	font-size:22px;
 }
 

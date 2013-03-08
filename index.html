@@ -8,7 +8,7 @@
     
     <meta name="author" content="Craig Peterson" />
 	 <link href="styles.css" rel="stylesheet" />
-	 <link rel="stylesheet" href="styles/sunburst.css">
+	 <link rel="stylesheet" href="styles/tomorrow-night-eighties.css">
 </head>
 
 <body class="impress-not-supported">
@@ -35,13 +35,15 @@
 <div id="concurrency" class="step" data-x="800" data-y="1000" data-z="-1900" data-rotate="40" ></div>
 <div id="stuff" class="step" data-x="800" data-y="1200" data-z="-1900" data-rotate="40" >Multiple things happening at once</div>
 
-<div id="synch" class="step remainStrong" data-x="1800" data-y="2100">Synchronous Code:<br/><pre><code class='cs'>var client = new WebClient();
-var text = client.DownloadString("http://someWebsite.com");
-textBox1.Text = text;
+<div id="synch" class="step remainStrong" data-x="1800" data-y="2100">Synchronous Code:<br/><pre><code class='cs'>private void button1_Click(object sender, EventArgs e)
+{
+    var client = new WebClient();
+    var text = client.DownloadString("http://someWebsite.com");
+    textBox1.Text = text;
+}
 </code></pre></div>
 <div id="whatsWrong" class="step" data-x="1800" data-y="2400">It works! What's wrong?</div>
 <div id="notResponding" class="step" data-x="1800" data-y="2000" data-z="-400" data-rotate-x="-90"><img src='lag.png'/></div>
-<div id="backToCode" class="step" data-x="1800" data-y="2200"></div>
 <div id="whatsWrong2" class="step" data-x="1800" data-y="2400">But that doesn't matter for Web-Apps!</div>
 <div id="indeed" class="step" data-x="1800" data-y="2000" data-z="400" data-rotate-x="-90" style="font-size:1000%">Yes it does!</div>
 <div id="times" class="step" data-x="2700" data-y="2000" data-z="400" data-rotate-x="-90">Things take time:<ul>
@@ -64,7 +66,120 @@ textBox1.Text = text;
 <div id="scale" class="step" data-x="4500" data-y="2000" data-z="300" data-rotate-x="-90"><img src='overheat.jpg'/></div>
 <div id="scale2" class="step" data-x="4500" data-y="2000" data-z="300" data-rotate-x="-90" style='width:1000px'><img src='overheat.jpg'/><img src='overheat.jpg'/><img src='overheat.jpg'/><img src='overheat.jpg'/></div>
 <div id="scale3" class="step" data-x="4500" data-y="2000" data-z="300" data-rotate-x="-90" style='width:1000px'><img src='google.jpg' width="800"/></div>
+<div id="waste" class="step" data-x="3200" data-y="2000" data-z="400" data-rotate-x="-90">Let's stop wasting money</div>
+<div id="goal" class="step remain gg" data-x="3200" data-y="2200" data-z="400">Goal: <u>NEVER</u> block a thread.</div>
+<div id="goal2" class="step remain gg" data-x="3200" data-y="2300" data-z="400">and actually understand our code in the process.</div>
+<div id="synchReturn" class="step" data-x="1800" data-y="2100"></div>
+<div id="threadedCode" class="step" data-x="2400" data-y="2100" data-z="200">Another approach - Threads!<br/><pre><code>private void button1_Click(object sender, EventArgs e)
+        {
+            new Thread(GetRequest).Start();
+        }
+        private void GetRequest()
+        {
+            var client = new WebClient();
+            var text = client.DownloadString("http://someWebsite.com");
+            textBox1.Text = text;
+        }</code></pre></div>
+<div id="threadException" class="step" data-x="2400" data-y="2200" data-rotate-x="-90"><img src='threadEx.png'></img></div>
+<div id="threadedCode2" class="step remainStrong threads" data-x="2400" data-y="2100" data-z="200">Fixed with magic!<br/><pre><code>private void button1_Click(object sender, EventArgs e)
+        {
+            new Thread(GetRequest).Start();
+        }
+        private void GetRequest()
+        {
+            var client = new WebClient();
+            var text = client.DownloadString("http://someWebsite.com");
+            textBox1.Invoke((Action&lt;string&gt;) (x =&gt; textBox1.Text = x), text);
+        }</code></pre></div>
+<div id="threaded3" class="step remain threads" data-x="2400" data-y="2400" data-z="200">Still blocking a thread.</div>
+<div id="synchReturn2" class="step" data-x="1800" data-y="2100"></div>
+<div id="APM" class="step" data-x="1800" data-y="2600" data-z="200">Asynchronous Programming Model (APM)<br/><pre><code>private void button1_Click(object sender, EventArgs e)
+        {
+            var request = HttpWebRequest.Create("http://someWebsite.com");
+            request.BeginGetResponse(OnRequestComplete, request);
+        }
+        private void OnRequestComplete(IAsyncResult state)
+        {
+            var request = (HttpWebRequest)state.AsyncState;
+            var response = request.EndGetResponse(state);
+            var text = new StreamReader(response.GetResponseStream()).ReadToEnd();
+            textBox1.Invoke((Action&lt;string&gt;)(x =&gt; textBox1.Text = x), text)
+        }</code></pre></div>
+<div id="EAP" class="step" data-x="1800" data-y="2600" data-z="200">Event-based Asynchronous Pattern (EAP)<br/><pre><code>private void button1_Click(object sender, EventArgs e)
+        {
+            var client = new WebClient();
+            client.DownloadStringCompleted += OnDownloadComplete;
+            client.DownloadStringAsync(new Uri("http://someWebsite.com"));
+        }
+        private void OnDownloadComplete(object sender, DownloadStringCompletedEventArgs e)
+        {
+                textBox1.Text = e.Result;
+        }</code></pre></div>
+<div id="tasks" class="step" data-scale="20" style="font-size: 1500%">Tasks!</div>
+<div id="whatIs" class="step remain what">What is a task?</div>	
+<div id="whatIs2" class="step remain what" data-y="200">Object that represents an asynchronous operation.</div>	
+<div id="whatIs3" class="step remain what" data-y="400">May be completed or in progress</div>	
+<div id="whatIs4" class="step remain what" data-y="600">May be on current thread, seperate thread, or no thread.</div>
+<div id="whatIs5" class="step" data-y="900">Can be typed <pre><code>Task&lt;T&gt;</code></pre> or untyped <pre><code>Task</code></pre></div>
 
+<div id="do" class="step remain do" data-x="900">What can you do with it?</div>	
+<div id="do2" class="step remain do" data-x="900" data-y="200">Wait for it to finish:<br/><pre><code>Task&lt;string&gt; t;
+string s = t.Result;
+
+Task t2;
+t2.RunSynchronously();</code></pre></div>	
+<div id="do3" class="step remain do" data-x="900" data-y="450">Check it's status:<br/><pre><code>t.IsCompleted
+t.IsFaulted
+t.IsCanceled</code></pre></div>	
+<div id="do4" class="step remain do" data-x="900" data-y="650">Attach a callback<br/><pre><code>Task continuation =
+    t.ContinueWith(x => textBox1.Text = x.Result);
+</code></pre></div>	
+<div id="do5" class="step remain do" data-x="900" data-y="850">Composition<br/><pre><code>Task t1,t2,t3;
+Task allDone = Task.WhenAll(t1,t2,t3);
+Task anyDone = Task.WhenAny(t1,t2,t3);
+</code></pre></div>
+<div id="synchReturn3" class="step" data-x="1800" data-y="2100"></div>
+<div id="taskCode" class="step" data-x="2300" data-y="2100"><pre><code>private void button1_Click(object sender, EventArgs e)
+    {
+        var client = new HttpClient();
+        Task&lt;HttpResponseMessage&gt; task = client.GetAsync("http://someWebsite.com");
+        task.ContinueWith(ReadResponse, 
+		   TaskScheduler.FromCurrentSynchronizationContext());
+    }
+    private void ReadResponse(Task&lt;HttpResponseMessage&gt; task)
+    {
+        Task&lt;string&gt; readTask = task.Result.Content.ReadAsStringAsync();
+        readTask.ContinueWith(SetText, 
+		    TaskScheduler.FromCurrentSynchronizationContext());
+    }
+    private void SetText(Task&lt;string&gt; task)
+    {
+        textBox1.Text = task.Result;
+    }</code></pre></div>
+<div id="asyncCode" class="step" data-x="2300" data-y="2100"><pre><code>private async void button1_Click(object sender, EventArgs e)
+{
+    var client = new HttpClient();
+    HttpResponseMessage response = await client.GetAsync("http://someWebsite.com");
+    string text = await response.Content.ReadAsStringAsync();
+    textBox1.Text = text;
+}</code></pre></div>
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 </div>
 <script src="js/impress.js"></script>
 <script src="js/jquery.js"></script>
