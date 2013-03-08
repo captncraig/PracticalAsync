@@ -71,50 +71,50 @@
 <div id="goal2" class="step remain gg" data-x="3200" data-y="2300" data-z="400">and actually understand our code in the process.</div>
 <div id="synchReturn" class="step" data-x="1800" data-y="2100"></div>
 <div id="threadedCode" class="step" data-x="2400" data-y="2100" data-z="200">Another approach - Threads!<br/><pre><code>private void button1_Click(object sender, EventArgs e)
-        {
-            new Thread(GetRequest).Start();
-        }
-        private void GetRequest()
-        {
-            var client = new WebClient();
-            var text = client.DownloadString("http://someWebsite.com");
-            textBox1.Text = text;
-        }</code></pre></div>
+{
+    new Thread(GetRequest).Start();
+}
+private void GetRequest()
+{
+    var client = new WebClient();
+    var text = client.DownloadString("http://someWebsite.com");
+    textBox1.Text = text;
+}</code></pre></div>
 <div id="threadException" class="step" data-x="2400" data-y="2200" data-rotate-x="-90"><img src='threadEx.png'></img></div>
 <div id="threadedCode2" class="step remainStrong threads" data-x="2400" data-y="2100" data-z="200">Fixed with magic!<br/><pre><code>private void button1_Click(object sender, EventArgs e)
-        {
-            new Thread(GetRequest).Start();
-        }
-        private void GetRequest()
-        {
-            var client = new WebClient();
-            var text = client.DownloadString("http://someWebsite.com");
-            textBox1.Invoke((Action&lt;string&gt;) (x =&gt; textBox1.Text = x), text);
-        }</code></pre></div>
+{
+    new Thread(GetRequest).Start();
+}
+private void GetRequest()
+{
+    var client = new WebClient();
+    var text = client.DownloadString("http://someWebsite.com");
+    textBox1.Invoke((Action&lt;string&gt;) (x =&gt; textBox1.Text = x), text);
+}</code></pre></div>
 <div id="threaded3" class="step remain threads" data-x="2400" data-y="2400" data-z="200">Still blocking a thread.</div>
 <div id="synchReturn2" class="step" data-x="1800" data-y="2100"></div>
 <div id="APM" class="step" data-x="1800" data-y="2600" data-z="200">Asynchronous Programming Model (APM)<br/><pre><code>private void button1_Click(object sender, EventArgs e)
-        {
-            var request = HttpWebRequest.Create("http://someWebsite.com");
-            request.BeginGetResponse(OnRequestComplete, request);
-        }
-        private void OnRequestComplete(IAsyncResult state)
-        {
-            var request = (HttpWebRequest)state.AsyncState;
-            var response = request.EndGetResponse(state);
-            var text = new StreamReader(response.GetResponseStream()).ReadToEnd();
-            textBox1.Invoke((Action&lt;string&gt;)(x =&gt; textBox1.Text = x), text)
-        }</code></pre></div>
+{
+    var request = HttpWebRequest.Create("http://someWebsite.com");
+    request.BeginGetResponse(OnRequestComplete, request);
+}
+private void OnRequestComplete(IAsyncResult state)
+{
+    var request = (HttpWebRequest)state.AsyncState;
+    var response = request.EndGetResponse(state);
+    var text = new StreamReader(response.GetResponseStream()).ReadToEnd();
+    textBox1.Invoke((Action&lt;string&gt;)(x =&gt; textBox1.Text = x), text)
+}</code></pre></div>
 <div id="EAP" class="step" data-x="1800" data-y="2600" data-z="200">Event-based Asynchronous Pattern (EAP)<br/><pre><code>private void button1_Click(object sender, EventArgs e)
-        {
-            var client = new WebClient();
-            client.DownloadStringCompleted += OnDownloadComplete;
-            client.DownloadStringAsync(new Uri("http://someWebsite.com"));
-        }
-        private void OnDownloadComplete(object sender, DownloadStringCompletedEventArgs e)
-        {
-                textBox1.Text = e.Result;
-        }</code></pre></div>
+{
+    var client = new WebClient();
+    client.DownloadStringCompleted += OnDownloadComplete;
+    client.DownloadStringAsync(new Uri("http://someWebsite.com"));
+}
+private void OnDownloadComplete(object sender, DownloadStringCompletedEventArgs e)
+{
+        textBox1.Text = e.Result;
+}</code></pre></div>
 <div id="tasks" class="step" data-scale="20" style="font-size: 1500%">Tasks!</div>
 <div id="whatIs" class="step remain what">What is a task?</div>	
 <div id="whatIs2" class="step remain what" data-y="200">Object that represents an asynchronous operation.</div>	
@@ -140,22 +140,22 @@ Task anyDone = Task.WhenAny(t1,t2,t3);
 </code></pre></div>
 <div id="synchReturn3" class="step" data-x="1800" data-y="2100"></div>
 <div id="taskCode" class="step" data-x="2300" data-y="2100"><pre><code>private void button1_Click(object sender, EventArgs e)
-    {
-        var client = new HttpClient();
-        Task&lt;HttpResponseMessage&gt; task = client.GetAsync("http://someWebsite.com");
-        task.ContinueWith(ReadResponse, 
-		   TaskScheduler.FromCurrentSynchronizationContext());
-    }
-    private void ReadResponse(Task&lt;HttpResponseMessage&gt; task)
-    {
-        Task&lt;string&gt; readTask = task.Result.Content.ReadAsStringAsync();
-        readTask.ContinueWith(SetText, 
-		    TaskScheduler.FromCurrentSynchronizationContext());
-    }
-    private void SetText(Task&lt;string&gt; task)
-    {
-        textBox1.Text = task.Result;
-    }</code></pre></div>
+{
+    var client = new HttpClient();
+    Task&lt;HttpResponseMessage&gt; task = client.GetAsync("http://someWebsite.com");
+    task.ContinueWith(ReadResponse, 
+	   TaskScheduler.FromCurrentSynchronizationContext());
+}
+private void ReadResponse(Task&lt;HttpResponseMessage&gt; task)
+{
+    Task&lt;string&gt; readTask = task.Result.Content.ReadAsStringAsync();
+    readTask.ContinueWith(SetText, 
+	    TaskScheduler.FromCurrentSynchronizationContext());
+}
+private void SetText(Task&lt;string&gt; task)
+{
+    textBox1.Text = task.Result;
+}</code></pre></div>
 <div id="asyncCode" class="step" data-x="2300" data-y="2100"><pre><code>private async void button1_Click(object sender, EventArgs e)
 {
     var client = new HttpClient();
@@ -163,6 +163,10 @@ Task anyDone = Task.WhenAny(t1,t2,t3);
     string text = await response.Content.ReadAsStringAsync();
     textBox1.Text = text;
 }</code></pre></div>
+
+<div id="sc2" class="step" data-scale="20" data-rotate-x="90"><img src="sc2.jpg" width="900"></img></div>
+<div id="git" class="step" data-scale="20" data-rotate-x="90" style="font-size: 240%"><pre class="git"><code>git clone git://github.com/captncraig/StarcraftUnits.git</code></pre></div>
+
 
 
 		
