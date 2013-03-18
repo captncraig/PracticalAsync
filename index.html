@@ -156,6 +156,16 @@ private void SetText(Task&lt;string&gt; task)
 {
     textBox1.Text = task.Result;
 }</code></pre></div>
+<div id="EAP2" class="step" data-x="1800" data-y="2600" data-z="200">Event-based Asynchronous Pattern (EAP)<br/><pre><code>private void button1_Click(object sender, EventArgs e)
+{
+    var client = new WebClient();
+    client.DownloadStringCompleted += OnDownloadComplete;
+    client.DownloadStringAsync(new Uri("http://someWebsite.com"));
+}
+private void OnDownloadComplete(object sender, DownloadStringCompletedEventArgs e)
+{
+        textBox1.Text = e.Result;
+}</code></pre></div>
 <div id="asyncCode" class="step" data-x="2300" data-y="2100"><pre><code>private async void button1_Click(object sender, EventArgs e)
 {
     var client = new HttpClient();
@@ -165,7 +175,7 @@ private void SetText(Task&lt;string&gt; task)
 }</code></pre></div>
 
 <div id="sc2" class="step" data-scale="20" data-rotate-x="90"><img src="sc2.jpg" width="900"></img></div>
-<div id="git" class="step" data-scale="20" data-rotate-x="90" style="font-size: 240%"><pre class="git"><code>git clone git://github.com/captncraig/StarcraftUnits.git</code></pre></div>
+<div id="git" class="step" data-scale="20" data-rotate-x="90" style="font-size: 240%"><pre class="git"><code>git clone git://github.com/captncraig/PracticalAsync.git</code></pre></div>
 
 
 
