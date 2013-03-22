@@ -191,6 +191,12 @@ private void SetText(Task&lt;string&gt; task)
     string text = await response.Content.ReadAsStringAsync();
     textBox1.Text = text;
 }</code></pre></div>
+<div id="note" class="step" data-x="3800" data-y="2500" data-rotate-x="-90">Quick Note</div>
+<div id="note2" class="step" data-x="3800" data-y="2500" data-z="100" data-rotate-x="-90">I have been assuming IO bound code</div>
+<div id="note3" class="step" data-x="3800" data-y="2500" data-z="200" data-rotate-x="-90">But task can still help us with cpu-bound tasks</div>
+<div id="note4" class="step" data-x="3800" data-y="2500" data-z="300" data-rotate-x="-90"><pre><code>Task t = Task.Run(() => CrunchNumbers());(</code></pre></div>
+
+<div id="enough" class="step" data-x="4300" data-y="2000" data-z="500" data-rotate-x="-90" >Enough talk, let's code!</div>
 
 
 
@@ -198,6 +204,8 @@ private void SetText(Task&lt;string&gt; task)
 <div id="sc2" class="step" data-scale="20" data-rotate-x="90"><img src="sc2.jpg" width="900"></img></div>
 <div id="git" class="step" data-scale="20" data-rotate-x="90" style="font-size: 240%"><pre class="git"><code>git clone git://github.com/captncraig/PracticalAsync.git</code></pre></div>
 
+<div id="whine" class="step" data-scale="25" data-rotate-x="90" style="font-size: 340%">Unit testing asynchronous code is hard!</div>
+<div id="whine2" class="step" ><img src='cry.jpg'></img></div>
 
 
 		
