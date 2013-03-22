@@ -26,10 +26,15 @@ namespace StarcraftUnits.Data
             return content.Trim('"');
         }
 
-        public async Task<IList<string>> GetCountersFor(string name)
+        public Task<IList<string>> GetCountersFor(string name)
         {
             var client = new JsonServiceClient(Url);
-            return client.Get<List<string>>("/counters/" + name);
+
+            var tcs = new TaskCompletionSource<IList<string>>();
+
+            client.GetAsync<List<string>>("/counters/" + name, tcs.SetResult, (x,e) => tcs.SetException(e));
+
+            return tcs.Task;
         }
     }
 }
