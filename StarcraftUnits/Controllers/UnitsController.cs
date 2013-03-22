@@ -33,11 +33,14 @@ namespace StarcraftUnits.Controllers
 
         public async Task<Unit> AggregateUnit(string name)
         {
-            var unit = await _db.GetUnit(name);
-            var counters = await _client.GetCountersFor(name);
-            unit.Counters = counters;
-            var builtFrom = await _client.BuiltFrom(name);
-            unit.BuiltFrom = builtFrom;
+            var unitTask = _db.GetUnit(name);
+            var countersTask = _client.GetCountersFor(name);
+            var builtFromTask = _client.BuiltFrom(name);
+
+            await Task.WhenAll(unitTask, countersTask, builtFromTask);
+            var unit = unitTask.Result;
+            unit.BuiltFrom = builtFromTask.Result;
+            unit.Counters = countersTask.Result;
             return unit;
         }
     }
