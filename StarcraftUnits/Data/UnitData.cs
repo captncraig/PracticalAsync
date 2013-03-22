@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlServerCe;
 using System.Linq;
+using System.Threading.Tasks;
 using Dapper;
 using StarcraftUnits.Models;
 
@@ -8,7 +9,7 @@ namespace StarcraftUnits.Data
 {
     public interface IUnitData
     {
-        IList<UnitSummary> GetAllUnits();
+        Task<IList<UnitSummary>> GetAllUnits();
         Unit GetUnit(string name);
     }
 
@@ -16,7 +17,7 @@ namespace StarcraftUnits.Data
     {
         private const string ConnectionString = @"Data Source=D:\Units.sdf";
 
-        public IList<UnitSummary> GetAllUnits()
+        public async Task<IList<UnitSummary>> GetAllUnits()
         {
             var list = new List<UnitSummary>();
 

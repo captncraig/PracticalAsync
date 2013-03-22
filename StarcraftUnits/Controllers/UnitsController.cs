@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Http;
 using StarcraftUnits.Data;
 using StarcraftUnits.Models;
@@ -19,9 +20,9 @@ namespace StarcraftUnits.Controllers
         public UnitsController():this(new UnitData(), new WebServiceClient()){}
 
         // GET /units
-        public IList<UnitSummary> GetAllUnits()
+        public async Task<IList<UnitSummary>> GetAllUnits()
         {
-            return _db.GetAllUnits();
+            return await _db.GetAllUnits();
         }
 
         // GET /units/Marine
