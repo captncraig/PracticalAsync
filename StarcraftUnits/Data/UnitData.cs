@@ -46,7 +46,7 @@ namespace StarcraftUnits.Data
             using (var connection = new SqlCeConnection(ConnectionString))
             {
                 connection.Open();
-                var results = connection.Query<Unit>("SELECT * FROM Units Where Name = @Name", new {Name = name});
+                var results = await connection.QueryAsync<Unit>("SELECT * FROM Units Where Name = @Name", new {Name = name});
                 return results.SingleOrDefault();
             }
         }
