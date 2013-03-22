@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using ServiceStack.ServiceClient.Web;
 
@@ -18,8 +20,10 @@ namespace StarcraftUnits.Data
 
         public async Task<string> BuiltFrom(string name)
         {
-            var client = new WebClient();
-            return client.DownloadString(Url + "buildings/" + name).Trim('"');
+            var client = new HttpClient();
+            var response = await client.GetAsync(Url + "buildings/" + name);
+            var content = await response.Content.ReadAsStringAsync();
+            return content.Trim('"');
         }
 
         public async Task<IList<string>> GetCountersFor(string name)
