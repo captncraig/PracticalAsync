@@ -10,7 +10,7 @@ namespace StarcraftUnits.Data
     public interface IUnitData
     {
         Task<IList<UnitSummary>> GetAllUnits();
-        Unit GetUnit(string name);
+        Task<Unit> GetUnit(string name);
     }
 
     class UnitData : IUnitData
@@ -41,7 +41,7 @@ namespace StarcraftUnits.Data
             return list;
         }
 
-        public Unit GetUnit(string name)
+        public async Task<Unit> GetUnit(string name)
         {
             using (var connection = new SqlCeConnection(ConnectionString))
             {

@@ -26,17 +26,17 @@ namespace StarcraftUnits.Controllers
         }
 
         // GET /units/Marine
-        public Unit GetUnit(string id)
+        public Task<Unit> GetUnit(string id)
         {
             return AggregateUnit(id);
         }
 
-        public Unit AggregateUnit(string name)
+        public async Task<Unit> AggregateUnit(string name)
         {
-            var unit = _db.GetUnit(name);
-            var counters = _client.GetCountersFor(name);
+            var unit = await _db.GetUnit(name);
+            var counters = await _client.GetCountersFor(name);
             unit.Counters = counters;
-            var builtFrom = _client.BuiltFrom(name);
+            var builtFrom = await _client.BuiltFrom(name);
             unit.BuiltFrom = builtFrom;
             return unit;
         }
