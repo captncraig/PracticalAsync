@@ -1,11 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
 using ServiceStack.ServiceClient.Web;
 
 namespace StarcraftUnits.Data
 {
+    public interface IWebServiceClient
+    {
+        string BuiltFrom(string name);
+        IList<string> GetCountersFor(string name);
+    }
+
     class WebServiceClient : IWebServiceClient
     {
         private const string Url = "http://localhost:49865/api/";

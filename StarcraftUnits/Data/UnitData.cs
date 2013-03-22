@@ -1,11 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlServerCe;
-using StarcraftUnits.Models;
-using Dapper;
 using System.Linq;
+using Dapper;
+using StarcraftUnits.Models;
 
 namespace StarcraftUnits.Data
 {
+    public interface IUnitData
+    {
+        IList<UnitSummary> GetAllUnits();
+        Unit GetUnit(string name);
+    }
+
     class UnitData : IUnitData
     {
         private const string ConnectionString = @"Data Source=D:\Units.sdf";

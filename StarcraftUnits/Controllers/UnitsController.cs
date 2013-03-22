@@ -18,13 +18,13 @@ namespace StarcraftUnits.Controllers
 
         public UnitsController():this(new UnitData(), new WebServiceClient()){}
 
-        // /units
+        // GET /units
         public IList<UnitSummary> GetAllUnits()
         {
             return _db.GetAllUnits();
         }
 
-        // /units/Marine
+        // GET /units/Marine
         public Unit GetUnit(string id)
         {
             return AggregateUnit(id);
