@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{82A221
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{C37C285A-723A-4FCA-91B4-220F03F5D6C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{AD26A827-0505-4F56-8CF8-E7BB10FFEA4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD26A827-0505-4F56-8CF8-E7BB10FFEA4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD26A827-0505-4F56-8CF8-E7BB10FFEA4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C37C285A-723A-4FCA-91B4-220F03F5D6C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C37C285A-723A-4FCA-91B4-220F03F5D6C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C37C285A-723A-4FCA-91B4-220F03F5D6C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C37C285A-723A-4FCA-91B4-220F03F5D6C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
