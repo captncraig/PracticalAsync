@@ -23,11 +23,11 @@ namespace StarcraftUnits.Data
 
             using (var connection = new SqlCeConnection(ConnectionString))
             {
-                connection.Open();
+                await connection.OpenAsync();
                 using (var command = new SqlCeCommand("SELECT Name,Race FROM Units", connection))
-                using (var reader = command.ExecuteReader())
+                using (var reader = await command.ExecuteReaderAsync())
                 {
-                    while (reader.Read())
+                    while (await reader.ReadAsync())
                     {
                         var summary = new UnitSummary
                         {

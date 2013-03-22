@@ -20,9 +20,9 @@ namespace StarcraftUnits.Controllers
         public UnitsController():this(new UnitData(), new WebServiceClient()){}
 
         // GET /units
-        public async Task<IList<UnitSummary>> GetAllUnits()
+        public Task<IList<UnitSummary>> GetAllUnits()
         {
-            return await _db.GetAllUnits();
+            return _db.GetAllUnits();
         }
 
         // GET /units/Marine
