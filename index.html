@@ -120,7 +120,8 @@ private void OnDownloadComplete(object sender, DownloadStringCompletedEventArgs 
 <div id="whatIs2" class="step remain what" data-y="200">Object that represents an asynchronous operation.</div>	
 <div id="whatIs3" class="step remain what" data-y="400">May be completed or in progress</div>	
 <div id="whatIs4" class="step remain what" data-y="600">May be on current thread, seperate thread, or no thread.</div>
-<div id="whatIs5" class="step" data-y="900">Can be typed <pre><code>Task&lt;T&gt;</code></pre> or untyped <pre><code>Task</code></pre></div>
+<div id="whatIs5" class="step remain what" data-y="900">Can be typed <pre><code>Task&lt;T&gt;</code></pre> or untyped <pre><code>Task</code></pre></div>
+<div id="whatIs6" class="step" data-y="1200">Promise / Future</pre></div>
 
 <div id="do" class="step remain do" data-x="900">What can you do with it?</div>	
 <div id="do2" class="step remain do" data-x="900" data-y="200">Wait for it to finish:<br/><pre><code>Task&lt;string&gt; t;
@@ -166,6 +167,23 @@ private void OnDownloadComplete(object sender, DownloadStringCompletedEventArgs 
 {
         textBox1.Text = e.Result;
 }</code></pre></div>
+<div id="taskCode2" class="step" data-x="2300" data-y="2100"><pre><code>private void button1_Click(object sender, EventArgs e)
+{
+    var client = new HttpClient();
+    Task&lt;HttpResponseMessage&gt; task = client.GetAsync("http://someWebsite.com");
+    task.ContinueWith(ReadResponse, 
+	   TaskScheduler.FromCurrentSynchronizationContext());
+}
+private void ReadResponse(Task&lt;HttpResponseMessage&gt; task)
+{
+    Task&lt;string&gt; readTask = task.Result.Content.ReadAsStringAsync();
+    readTask.ContinueWith(SetText, 
+	    TaskScheduler.FromCurrentSynchronizationContext());
+}
+private void SetText(Task&lt;string&gt; task)
+{
+    textBox1.Text = task.Result;
+}</code></pre></div>
 <div id="asyncCode" class="step" data-x="2300" data-y="2100"><pre><code>private async void button1_Click(object sender, EventArgs e)
 {
     var client = new HttpClient();
@@ -173,6 +191,9 @@ private void OnDownloadComplete(object sender, DownloadStringCompletedEventArgs 
     string text = await response.Content.ReadAsStringAsync();
     textBox1.Text = text;
 }</code></pre></div>
+
+
+
 
 <div id="sc2" class="step" data-scale="20" data-rotate-x="90"><img src="sc2.jpg" width="900"></img></div>
 <div id="git" class="step" data-scale="20" data-rotate-x="90" style="font-size: 240%"><pre class="git"><code>git clone git://github.com/captncraig/PracticalAsync.git</code></pre></div>
